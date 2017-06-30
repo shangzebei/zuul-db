@@ -1,12 +1,16 @@
 package com.shang.zuul;
 
+import com.shang.zuul.domain.URLEntry;
+import com.shang.zuul.repository.URLEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.RoutesRefreshedEvent;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -15,10 +19,24 @@ import java.util.List;
 @Service
 public class ZuulService {
 
-    public ZuulFilter zuulFilter;
 
+    public ZuulFilter zuulFilter;
     @Autowired
     private ApplicationEventPublisher publisher;
+
+    @Autowired
+    private URLEntryRepository urlEntryRepository;
+
+
+    @PostConstruct
+    public void init() {
+        List<URLEntry> all = urlEntryRepository.findAll();
+        for (URLEntry urlEntry : all) {
+            ZuulProperties.ZuulRoute route=new ZuulProperties.ZuulRoute(urlEntry.getUrl(),urlEntry.getLocal());
+            zuulFilter.addRoute(route);
+        }
+    }
+
 
     public ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute) {
         System.out.println(zuulRoute);
