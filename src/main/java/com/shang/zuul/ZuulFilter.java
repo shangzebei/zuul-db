@@ -8,17 +8,17 @@ import org.springframework.cloud.netflix.zuul.filters.discovery.DiscoveryClientR
  * Created by shangzebei on 2017/6/29.
  */
 public class ZuulFilter extends DiscoveryClientRouteLocator {
-    private ZuulService zuulService;
+    private ZuulProvider zuulProvider;
 
-    public ZuulFilter(String servletPath, DiscoveryClient discovery, ZuulProperties properties, ZuulService zuulService) {
+    public ZuulFilter(String servletPath, DiscoveryClient discovery, ZuulProperties properties, ZuulProvider zuulService) {
         super(servletPath, discovery, properties);
-        this.zuulService = zuulService;
-        this.zuulService.zuulFilter=this;
+        this.zuulProvider = zuulService;
+        zuulService.init(this);
     }
 
     @Override
     protected ZuulProperties.ZuulRoute getZuulRoute(String adjustedPath) {
         ZuulProperties.ZuulRoute zuulRoute = super.getZuulRoute(adjustedPath);
-        return zuulService.getRoute(zuulRoute);
+        return zuulProvider.getRoute(zuulRoute);
     }
 }
