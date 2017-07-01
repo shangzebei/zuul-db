@@ -13,7 +13,7 @@ public class ZuulFilter extends DiscoveryClientRouteLocator {
     public ZuulFilter(String servletPath, DiscoveryClient discovery, ZuulProperties properties, ZuulProvider zuulService) {
         super(servletPath, discovery, properties);
         this.zuulProvider = zuulService;
-        zuulService.init(this);
+        zuulService.init(this,properties);
     }
 
     @Override

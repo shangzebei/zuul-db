@@ -16,6 +16,7 @@ public interface ZuulProvider {
     /**
      * init with zuulFilter
      * @param zuulFilter
+     * @param properties
      */
-    void init(ZuulFilter zuulFilter);
+    void init(ZuulFilter zuulFilter, ZuulProperties properties);
 }
