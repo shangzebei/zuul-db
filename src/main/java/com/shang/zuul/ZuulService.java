@@ -58,8 +58,8 @@ public class ZuulService implements ZuulProvider {
      * @param zuulRoute
      */
     public void addRoute(ZuulProperties.ZuulRoute zuulRoute) {
-        publisher.publishEvent(new RoutesRefreshedEvent(zuulFilter));
         zuulFilter.addRoute(zuulRoute);
+        freshMapper();
 
     }
 
@@ -71,6 +71,7 @@ public class ZuulService implements ZuulProvider {
     public void addRoutes(Map<String, ZuulProperties.ZuulRoute> map) {
         properties.setRoutes(map);
         zuulFilter.refresh();
+        freshMapper();
     }
 
     /**
@@ -82,6 +83,11 @@ public class ZuulService implements ZuulProvider {
         return zuulFilter.getRoutes();
     }
 
+
+
+    private void freshMapper() {
+        publisher.publishEvent(new RoutesRefreshedEvent(zuulFilter));
+    }
 
     /**
      * init method
