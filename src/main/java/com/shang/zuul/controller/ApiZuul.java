@@ -20,7 +20,7 @@ public class ApiZuul {
 
     @PostMapping("addRoute")
     public void addRoute() {
-        ZuulProperties.ZuulRoute route=new ZuulProperties.ZuulRoute("/chinamall/**","http://www.hao123.com");
+        ZuulProperties.ZuulRoute route=new ZuulProperties.ZuulRoute("/chinamall/**","http://127.0.0.1:8888/getRoutes");
         zuulService.addRoute(route);
     }
 
@@ -29,4 +29,5 @@ public class ApiZuul {
         List<Route> routes = zuulService.getRoutes();
         return routes;
     }
+
 }

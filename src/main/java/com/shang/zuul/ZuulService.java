@@ -46,9 +46,7 @@ public class ZuulService implements ZuulProvider {
 
     @Override
     public ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute) {
-//        System.out.println(zuulRoute);
         count++;
-        zuulRoute.setLocation("http://www.baidu.com");
         return zuulRoute;
     }
 

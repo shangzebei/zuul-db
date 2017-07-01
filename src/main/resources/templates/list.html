@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../static/js/bootstrap.js"/>
+    <link href="../static/css/bootstrap.css">
+</head>
+
+<body>
+
+<h1>Product list</h1>
+
+<table>
+    <tr >
+        <th>id</th>
+        <th>url</th>
+        <th>local</th>
+    </tr>
+    <tr th:each="prod : ${kk}">
+        <td th:text="${prod.id}">Onions</td>
+        <td th:text="${prod.url}">2.41</td>
+        <td th:text="${prod.local}">yes</td>
+    </tr>
+</table>
+
+<p>
+    <!--<a href="../home.html" th:href="@{/}">Return to home</a>-->
+</p>
+
+</body>
+
+</html>
