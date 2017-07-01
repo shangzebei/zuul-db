@@ -31,7 +31,7 @@ public class ZuulService implements ZuulProvider {
     @Autowired
     private URLEntryRepository urlEntryRepository;
     private ZuulProperties properties;
-    long count = 0;
+    volatile long count = 0;
 
     {
         new Timer().schedule(new TimerTask() {
