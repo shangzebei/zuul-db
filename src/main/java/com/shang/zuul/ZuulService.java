@@ -37,7 +37,7 @@ public class ZuulService implements ZuulProvider {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                log.info("speed= " + count + "t/s");
+//                log.info("speed= " + count + "t/s");
                 count = 0;
             }
         }, 0, 1000);

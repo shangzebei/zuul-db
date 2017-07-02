@@ -4,27 +4,97 @@
 
 <head>
     <title>Good Thymes Virtual Grocery</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="../static/js/bootstrap.js"/>
-    <link href="../static/css/bootstrap.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="js/jquery.js"/>
+    <script type="text/javascript" src="js/bootstrap.js"/>
+    <script type="text/javascript" src="js/zuul.js"/>
+    <script type="text/javascript" src="js/http.js"/>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/zuul.css" rel="stylesheet"/>
 </head>
 
 <body>
 
-<h1>Product list</h1>
+<div class="modal fade add_dia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">
+                    添加路由
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <form>
+                                <div class="form-group">
+                                    <label for="url">匹配URL</label>
+                                    <input id="url" type="text" class="form-control" placeholder="url"/>
+                                    <p class="help-block">/book/**</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="local">路由URL</label>
+                                    <input id="local" type="text" class="form-control" placeholder="location"/>
+                                    <p class="help-block">http://www.baidu.com</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                <button class="btn btn-primary" onclick="save()">保存设置</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table>
-    <tr >
-        <th>id</th>
-        <th>url</th>
-        <th>local</th>
-    </tr>
-    <tr th:each="prod : ${kk}">
-        <td th:text="${prod.id}">Onions</td>
-        <td th:text="${prod.url}">2.41</td>
-        <td th:text="${prod.local}">yes</td>
-    </tr>
-</table>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="text-center">
+                zuul--gateway
+            </h3>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr class="info">
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        匹配
+                    </th>
+                    <th>
+                        目标
+                    </th>
+                    <th>
+                        状态
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="prod : ${kk}">
+                    <td th:text="${prod.id}">Onions</td>
+                    <td th:text="${prod.url}">2.41</td>
+                    <td th:text="${prod.local}">yes</td>
+                    <th th:text="state">state</th>
+                </tr>
+
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".add_dia">添加路由
+            </button>
+        </div>
+    </div>
+</div>
+
 
 <p>
     <!--<a href="../home.html" th:href="@{/}">Return to home</a>-->
