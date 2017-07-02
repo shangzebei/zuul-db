@@ -28,8 +28,8 @@ public class HomeServie {
      */
     public boolean add(URLEntry urlEntry) {
         urlEntry = Util.check(urlEntry);
-        zuulService.addRoute(new ZuulProperties.ZuulRoute(urlEntry.getUrl(), urlEntry.getLocal()));
-        URLEntry byUrl = urlEntryRepository.findByUrl(urlEntry.getUrl());
+        zuulService.addRoute(new ZuulProperties.ZuulRoute(urlEntry.getPath(), urlEntry.getLocal()));
+        URLEntry byUrl = urlEntryRepository.findByTitle(urlEntry.getTitle());
         if (byUrl == null) {
             URLEntry save = urlEntryRepository.save(urlEntry);
             return save != null;
@@ -49,7 +49,7 @@ public class HomeServie {
             }
             return false;
         } else {
-            zuulService.addChangeRoutes(one.getUrl(), local);
+            zuulService.addChangeRoutes(one.getTitle(), local);
             one.setLocal(local);
             urlEntryRepository.save(one);
             return true;

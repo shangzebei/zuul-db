@@ -19,7 +19,7 @@ public class URLEntry {
     private Long id;
     @NotNull
     @NotEmpty
-    private String url;
+    private String title;
     @NotNull
     @NotEmpty
     private String local;

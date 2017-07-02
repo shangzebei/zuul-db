@@ -38,7 +38,8 @@ public class Home {
             URLEntry urlEntry = new URLEntry();
             Route route = routes.get(i - 1);
             urlEntry.setId(Long.valueOf(i));
-            urlEntry.setUrl(route.getFullPath());
+            urlEntry.setTitle(route.getId());
+            urlEntry.setPath(route.getFullPath());
             urlEntry.setLocal(route.getLocation());
             urlEntries.add(urlEntry);
         }
@@ -54,6 +55,7 @@ public class Home {
             return ResponseEntity.badRequest()
                     .body(Collections.singletonMap("state", false));
         }
+
         boolean add = homeServie.add(urlEntry);
         return ResponseEntity.ok(Collections.singletonMap("state", add));
     }

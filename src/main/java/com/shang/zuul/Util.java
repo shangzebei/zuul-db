@@ -7,9 +7,8 @@ import com.shang.zuul.domain.URLEntry;
  */
 public class Util {
     public static URLEntry check(URLEntry urlEntry) {
-        if (urlEntry.getPath() == null) {
-            urlEntry.setUrl("/" + urlEntry.getUrl() + "/**");
-            urlEntry.setPath(urlEntry.getUrl());
+        if (urlEntry.getPath() == null || urlEntry.getPath().equals("")) {
+            urlEntry.setPath("/" + urlEntry.getTitle() + "/**");
         }
         return urlEntry;
 
