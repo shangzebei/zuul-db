@@ -21,7 +21,7 @@ public class HomeServie {
         URLEntry byUrl = urlEntryRepository.findByUrl(urlEntry.getUrl());
         if (byUrl == null) {
             URLEntry save = urlEntryRepository.save(urlEntry);
-            return save == null;
+            return save != null;
         }
         return false;
     }

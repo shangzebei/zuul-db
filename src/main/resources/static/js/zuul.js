@@ -11,5 +11,6 @@ function save() {
         if (data.state == true) {
             window.location.reload();
         }
+
     })
 }
