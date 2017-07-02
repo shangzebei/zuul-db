@@ -10,10 +10,7 @@ import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by shangzebei on 2017/6/30.
@@ -31,6 +28,9 @@ public class ZuulService implements ZuulProvider {
     @Autowired
     private URLEntryRepository urlEntryRepository;
     private ZuulProperties properties;
+    Map<String, String> changeRoutes = new HashMap();
+
+
     volatile long count = 0;
 
     {
@@ -47,6 +47,9 @@ public class ZuulService implements ZuulProvider {
     @Override
     public ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute) {
         count++;
+        if (changeRoutes.keySet().contains(zuulRoute.getId())) {
+            zuulRoute.setLocation(changeRoutes.get(zuulRoute.getId()));
+        }
         return zuulRoute;
     }
 
@@ -82,7 +85,6 @@ public class ZuulService implements ZuulProvider {
     }
 
 
-
     private void freshMapper() {
         publisher.publishEvent(new RoutesRefreshedEvent(zuulFilter));
     }
@@ -104,4 +106,10 @@ public class ZuulService implements ZuulProvider {
             zuulFilter.addRoute(route);
         }
     }
+
+    public void addChangeRoutes(String url, String local) {
+        changeRoutes.put(url, local);
+    }
+
+
 }

@@ -25,5 +25,7 @@ public class URLEntry {
     private String local;
     private String path;
 
+    public URLEntry() {
+    }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,7 +43,7 @@ public class Home {
             urlEntries.add(urlEntry);
         }
         model.addAttribute("kk", urlEntries);
-        return "list";
+        return "home";
     }
 
     @PostMapping("home/add")
@@ -55,5 +56,22 @@ public class Home {
         }
         boolean add = homeServie.add(urlEntry);
         return ResponseEntity.ok(Collections.singletonMap("state", add));
+    }
+
+    @PostMapping("home/delete")
+    public ResponseEntity delete() {
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("zuul/{id}")
+    public ResponseEntity get(@PathVariable int id) {
+        Route route = zuulService.getRoutes().get(id);
+        return ResponseEntity.ok(route);
+    }
+
+    @PostMapping("zuul/change")
+    public ResponseEntity change(Long id, String path) {
+        boolean change = homeServie.change(id, path);
+        return ResponseEntity.ok(Collections.singletonMap("state", change));
     }
 }

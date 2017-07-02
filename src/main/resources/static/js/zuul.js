@@ -16,3 +16,9 @@ function save() {
 
     })
 }
+function del(i) {
+    alert(i);
+}
+function change(i) {
+
+}
