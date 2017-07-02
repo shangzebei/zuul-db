@@ -1,5 +1,6 @@
 package com.shang.zuul.repository;
 
+import com.shang.zuul.Util;
 import com.shang.zuul.ZuulService;
 import com.shang.zuul.domain.URLEntry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,14 @@ public class HomeServie {
     @Autowired
     private URLEntryRepository urlEntryRepository;
 
+    /**
+     * add route
+     *
+     * @param urlEntry
+     * @return
+     */
     public boolean add(URLEntry urlEntry) {
+        urlEntry = Util.check(urlEntry);
         zuulService.addRoute(new ZuulProperties.ZuulRoute(urlEntry.getUrl(), urlEntry.getLocal()));
         URLEntry byUrl = urlEntryRepository.findByUrl(urlEntry.getUrl());
         if (byUrl == null) {

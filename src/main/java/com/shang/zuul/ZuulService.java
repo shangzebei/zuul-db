@@ -99,7 +99,8 @@ public class ZuulService implements ZuulProvider {
         this.properties = properties;
         List<URLEntry> all = urlEntryRepository.findAll();
         for (URLEntry urlEntry : all) {
-            ZuulProperties.ZuulRoute route = new ZuulProperties.ZuulRoute(urlEntry.getUrl(), urlEntry.getLocal());
+            ZuulProperties.ZuulRoute route = new ZuulProperties
+                    .ZuulRoute(urlEntry.getPath(), urlEntry.getLocal());
             zuulFilter.addRoute(route);
         }
     }

@@ -13,4 +13,9 @@ spring:
       ddl-auto: update
   thymeleaf:
     cache: false
+zuul:
+  routes:
+    books:
+      path: /hello/**
+      url: http://www.baidu.com
 #debug: true

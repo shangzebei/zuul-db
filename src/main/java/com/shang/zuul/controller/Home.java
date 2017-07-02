@@ -3,6 +3,7 @@ package com.shang.zuul.controller;
 import com.shang.zuul.ZuulService;
 import com.shang.zuul.domain.URLEntry;
 import com.shang.zuul.repository.HomeServie;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.List;
  * Created by shangzebei on 2017/7/1.
  */
 @Controller
+@Log4j
 public class Home {
     @Autowired
     private ZuulService zuulService;
@@ -47,7 +49,9 @@ public class Home {
     @ResponseBody
     public ResponseEntity add(@Valid URLEntry urlEntry, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(Collections.singletonMap("state", false));
+            log.info(bindingResult.toString());
+            return ResponseEntity.badRequest()
+                    .body(Collections.singletonMap("state", false));
         }
         boolean add = homeServie.add(urlEntry);
         return ResponseEntity.ok(Collections.singletonMap("state", add));
