@@ -1,0 +1,21 @@
+{
+  "name": "zuul",
+  "authors": [
+    "shangzebei <917058965@qq.com>"
+  ],
+  "description": "this is zuul gateway",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3",
+    "jquery": "^3.2.1"
+  }
+}
