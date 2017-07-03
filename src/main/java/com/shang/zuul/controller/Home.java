@@ -47,6 +47,24 @@ public class Home {
         return "home";
     }
 
+    @GetMapping("home/getAll")
+    @ResponseBody
+    private ArrayList<URLEntry> listAll() {
+        List<Route> routes = zuulService.getRoutes();
+        ArrayList<URLEntry> urlEntries = new ArrayList<>();
+        for (int i = 1; i <= routes.size(); i++) {
+            URLEntry urlEntry = new URLEntry();
+            Route route = routes.get(i - 1);
+            urlEntry.setId(Long.valueOf(i));
+            urlEntry.setTitle(route.getId());
+            urlEntry.setPath(route.getFullPath());
+            urlEntry.setLocal(route.getLocation());
+            urlEntries.add(urlEntry);
+        }
+
+        return urlEntries;
+    }
+
     @PostMapping("home/add")
     @ResponseBody
     public ResponseEntity add(@Valid URLEntry urlEntry, BindingResult bindingResult) {

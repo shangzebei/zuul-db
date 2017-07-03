@@ -3,7 +3,7 @@ server:
   address: 0.0.0.0
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1/shang
+    url: jdbc:mysql://192.168.1.88:3306/shang
     username: root
     password: shang
     driver-class-name: com.mysql.jdbc.Driver
@@ -13,9 +13,4 @@ spring:
       ddl-auto: update
   thymeleaf:
     cache: false
-zuul:
-  routes:
-    books:
-      path: /hello/**
-      url: http://www.baidu.com
 #debug: true

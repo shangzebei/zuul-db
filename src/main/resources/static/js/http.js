@@ -1,8 +1,9 @@
+var _url = "";
 var http = {
     //Ajax的get请求方法
     getAjax_clean: function (url, cb) {
         $.ajax({
-            url: url,
+            url: _url+url,
             type: 'GET',
             dataType: 'json',
             success: function (data, status, xhr) {
@@ -16,7 +17,7 @@ var http = {
     //Ajax的post请求方法
     postAjax_clean: function (url, post_data, cb) {
         $.ajax({
-            url: url,
+            url: _url+url,
             type: 'POST',
             data: post_data,
             async: true,
@@ -34,7 +35,7 @@ var http = {
     //Ajax的post同步请求方法
     postAjax_synchro_clean: function (url, post_data, cb) {
         $.ajax({
-            url: url,
+            url: _url+url,
             type: 'POST',
             data: post_data,
             async: false,
@@ -52,7 +53,7 @@ var http = {
     //Ajax的get请求方法传送e的元素
     getAjax: function (e, url, cb) {
         $.ajax({
-            url: url,
+            url: _url+url,
             type: 'GET',
             dataType: 'json',
             beforeSend: function (xhr, settings) {
@@ -71,7 +72,7 @@ var http = {
     //Ajax的get请求方法传送e的元素
     postAjax: function (e, url, post_data, cb) {
         $.ajax({
-            url: url,
+            url: _url+url,
             type: 'POST',
             data: post_data,
             async: true,
