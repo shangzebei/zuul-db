@@ -1,4 +1,5 @@
-var _url="http://192.168.1.161:8888/";
+// var _url="http://192.168.1.161:8888/";
+var _url="";
 var http = {
     //Ajax的get请求方法
     getAjax_clean: function (url, cb) {

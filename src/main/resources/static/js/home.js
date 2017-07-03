@@ -47,7 +47,7 @@ function save() {
     })
 }
 function del(i) {
-    alert(i);
+    BootstrapDialog.alert("delete");
 }
 function change(i) {
 
