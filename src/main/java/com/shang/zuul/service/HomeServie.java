@@ -2,16 +2,13 @@ package com.shang.zuul.service;
 
 import com.shang.zuul.Util;
 import com.shang.zuul.domain.URLEntry;
-import com.shang.zuul.mapper.RouteMapper;
 import com.shang.zuul.repository.URLEntryRepository;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,9 +21,6 @@ public class HomeServie {
     private ZuulService zuulService;
     @Autowired
     private URLEntryRepository urlEntryRepository;
-    @Autowired
-    private RouteMapper routeMapper;
-
     /**
      * add route
      *
