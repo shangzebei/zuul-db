@@ -144,7 +144,7 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    $(".speed").text(ext.data);
+    $(".speed").text(evt.data+" t/s");
 }
 
 function onError(evt) {
