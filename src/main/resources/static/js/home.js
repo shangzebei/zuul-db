@@ -23,8 +23,11 @@ $(document).ready(function () {
             }],
             data: data
         });
-    })
-});
+    });
+    initWebSocket();
+})
+
+
 function operateFormatter(value, row, index) {
     return [
         '<button type="button" class="btn btn-primary zuul-btn" onclick="change(' + index + ')">修改目标</button>',
@@ -87,8 +90,8 @@ function change(i) {
 function changSave(title) {
     var local = $("#local");
     var fromDate = new FormData();
-    fromDate.append("title",title)
-    fromDate.append("local",local.val())
+    fromDate.append("title", title)
+    fromDate.append("local", local.val())
     http.postAjax_clean("route/change", fromDate, function (resdate) {
         if (resdate.state == true) {
             window.location.reload();
@@ -106,8 +109,44 @@ function changDialog(data) {
     title.attr("disabled", true);
     local.val(data.location);
     path.attr("disabled", true);
-    savebtn.attr("onclick", "changSave('"+data.id+"')");
+    savebtn.attr("onclick", "changSave('" + data.id + "')");
     path.val(data.fullPath);
     diaTitle.text("改变路由");
     $(".add_dia").modal("show");
+}
+
+
+var websocket = null;
+var localurl = document.location.href.split("/")[2] + "/routes/speed";
+function initWebSocket() {
+
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://" + localurl);
+    }
+    else if ('MozWebSocket' in window) {
+        websocket = new MozWebSocket("ws://" + localurl);
+    }
+    else {
+        websocket = new SockJS("ws://" + localurl);
+    }
+    websocket.onopen = onOpen;
+    websocket.onmessage = onMessage;
+    websocket.onerror = onError;
+    websocket.onclose = onClose;
+}
+
+function onOpen(evt) {
+
+}
+
+function onClose(evt) {
+
+}
+
+function onMessage(evt) {
+    $(".speed").text(ext.data);
+}
+
+function onError(evt) {
+
 }
