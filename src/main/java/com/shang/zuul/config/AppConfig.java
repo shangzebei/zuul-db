@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by shangzebei on 2017/6/30.
  */
 @Configuration
-public class AppConfig {
+public class AppConfig{
 
 
     @Autowired(required = false)
@@ -37,4 +37,6 @@ public class AppConfig {
     public DiscoveryClientRouteLocator discoveryClientRouteLocator(ServerProperties server, DiscoveryClient discovery, ZuulProperties properties) {
         return new ZuulFilter(server.getServletPath(), discovery, properties, zuulProvider);
     }
+
+
 }

@@ -11,7 +11,9 @@ import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -31,19 +33,11 @@ public class ZuulService implements ZuulProvider {
     private URLEntryRepository urlEntryRepository;
     private ZuulProperties properties;
 
+    @Autowired
+    private SpeedWebsocket speedWebsocket;
+
 
     volatile long count = 0;
-
-    {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-//                log.info("speed= " + count + "t/s");
-                count = 0;
-            }
-        }, 0, 1000);
-    }
-
 
     @Override
     public ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute) {
@@ -107,9 +101,25 @@ public class ZuulService implements ZuulProvider {
                     .ZuulRoute(urlEntry.getPath(), urlEntry.getLocal());
             zuulFilter.addRoute(route);
         }
+
+        showSpeed();
     }
 
-
+    private void showSpeed() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (speedWebsocket.get_session() != null) {
+                    try {
+                        speedWebsocket.get_session().sendMessage(new TextMessage(count+""));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                count = 0;
+            }
+        }, 0, 1000);
+    }
 
 
 }
