@@ -30,7 +30,6 @@ public class ZuulService implements ZuulProvider {
     @Autowired
     private URLEntryRepository urlEntryRepository;
     private ZuulProperties properties;
-    Map<String, String> changeRoutes = new HashMap();
 
 
     volatile long count = 0;
@@ -49,11 +48,6 @@ public class ZuulService implements ZuulProvider {
     @Override
     public ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute) {
         count++;
-        if (zuulRoute != null) {
-            if (changeRoutes.keySet().contains(zuulRoute.getId())) {
-                zuulRoute.setLocation(changeRoutes.get(zuulRoute.getId()));
-            }
-        }
         return zuulRoute;
     }
 
@@ -64,7 +58,7 @@ public class ZuulService implements ZuulProvider {
      */
     public void addRoute(ZuulProperties.ZuulRoute zuulRoute) {
         zuulFilter.addRoute(zuulRoute);
-        freshMapper();
+        freshMapperUrl();
 
     }
 
@@ -76,7 +70,7 @@ public class ZuulService implements ZuulProvider {
     public void reSetRoutes(Map<String, ZuulProperties.ZuulRoute> map) {
         properties.setRoutes(map);
         zuulFilter.refresh();
-        freshMapper();
+        freshMapperUrl();
     }
 
     /**
@@ -93,7 +87,7 @@ public class ZuulService implements ZuulProvider {
     }
 
 
-    private void freshMapper() {
+    private void freshMapperUrl() {
         publisher.publishEvent(new RoutesRefreshedEvent(zuulFilter));
     }
 
@@ -115,9 +109,7 @@ public class ZuulService implements ZuulProvider {
         }
     }
 
-    public void addChangeRoutes(String url, String local) {
-        changeRoutes.put(url, local);
-    }
+
 
 
 }

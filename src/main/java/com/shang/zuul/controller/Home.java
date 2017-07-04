@@ -42,7 +42,6 @@ public class Home {
             urlEntry.setLocal(route.getLocation());
             urlEntries.add(urlEntry);
         }
-
         return urlEntries;
     }
 
@@ -59,15 +58,15 @@ public class Home {
         return ResponseEntity.ok(Collections.singletonMap("state", add));
     }
 
-    @GetMapping("home/{id}")
+    @GetMapping("{id}")
     public ResponseEntity get(@PathVariable int id) {
         Route route = zuulService.getRoutes().get(id);
         return ResponseEntity.ok(route);
     }
 
     @PostMapping("change")
-    public ResponseEntity change(Long id, String path) {
-        boolean change = homeServie.change(id, path);
+    public ResponseEntity change(String title, String local) {
+        boolean change = homeServie.change(title, local);
         return ResponseEntity.ok(Collections.singletonMap("state", change));
     }
 

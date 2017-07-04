@@ -13,10 +13,10 @@ $(document).ready(function () {
             }, {
                 field: 'path',
                 title: '匹配路由'
-            },{
+            }, {
                 field: 'local',
                 title: '目标路由'
-            },{
+            }, {
                 field: 'ops',
                 title: '操作',
                 formatter: operateFormatter
@@ -27,12 +27,29 @@ $(document).ready(function () {
 });
 function operateFormatter(value, row, index) {
     return [
-        '<button type="button" class="btn btn-primary zuul-btn" onclick="change('+index+')">修改目标</button>',
-        '<button type="button" class="btn btn-danger zuul-btn" onclick="del(\''+row.title+'\')">删  除</button>'
+        '<button type="button" class="btn btn-primary zuul-btn" onclick="change(' + index + ')">修改目标</button>',
+        '<button type="button" class="btn btn-danger zuul-btn" onclick="del(\'' + row.title + '\')">删  除</button>'
     ].join('');
 }
+function add() {
+    var title = $("#title");
+    var local = $("#local");
+    var path = $("#path");
+    var savebtn = $(".zuul-chang");
+    var diaTitle = $("#myModalLabel");
+    title.val("");
+    title.attr("disabled", false);
+    local.val("");
+    path.attr("disabled", false);
+    savebtn.attr("onclick", "save()");
+    path.val("");
+    diaTitle.text("添加路由");
+    $(".add_dia").modal("show");
+
+}
 function save() {
-    var url = $("#url").val();
+
+    var url = $("#title").val();
     var local = $("#local").val();
     var path = $("#path").val();
     var from = new FormData();
@@ -47,11 +64,11 @@ function save() {
     })
 }
 function del(i) {
-    BootstrapDialog.confirm('确认要删除'+i+"这条路由？", function(result){
-        if(result) {
-            var data=new FormData();
-            data.append("title",i)
-            http.postAjax_clean("route/delete",data,function (resdate) {
+    BootstrapDialog.confirm('确认要删除' + i + "这条路由？", function (result) {
+        if (result) {
+            var data = new FormData();
+            data.append("title", i)
+            http.postAjax_clean("route/delete", data, function (resdate) {
                 if (resdate.state == true) {
                     window.location.reload();
                 }
@@ -60,8 +77,37 @@ function del(i) {
     });
 
 
-
 }
 function change(i) {
+    http.getAjax_clean("route/" + (i), function (data) {
+        changDialog(data)
+    })
 
+}
+function changSave(title) {
+    var local = $("#local");
+    var fromDate = new FormData();
+    fromDate.append("title",title)
+    fromDate.append("local",local.val())
+    http.postAjax_clean("route/change", fromDate, function (resdate) {
+        if (resdate.state == true) {
+            window.location.reload();
+        }
+    })
+
+}
+function changDialog(data) {
+    var title = $("#title");
+    var local = $("#local");
+    var path = $("#path");
+    var savebtn = $(".zuul-chang");
+    var diaTitle = $("#myModalLabel");
+    title.val(data.id);
+    title.attr("disabled", true);
+    local.val(data.location);
+    path.attr("disabled", true);
+    savebtn.attr("onclick", "changSave('"+data.id+"')");
+    path.val(data.fullPath);
+    diaTitle.text("改变路由");
+    $(".add_dia").modal("show");
 }
