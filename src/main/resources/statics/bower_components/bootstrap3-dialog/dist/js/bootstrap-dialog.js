@@ -1148,7 +1148,7 @@
             this.getModalHeader().append(this.createHeaderContent());
             this.getModalBody().append(this.createBodyContent());
             this.getModal().data('bs.modal', new BootstrapDialogModal(this.getModal(), {
-                backdrop: 'static',
+                backdrop: 'statics',
                 keyboard: false,
                 show: false
             }));

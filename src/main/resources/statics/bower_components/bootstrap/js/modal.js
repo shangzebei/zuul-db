@@ -199,7 +199,7 @@
           return
         }
         if (e.target !== e.currentTarget) return
-        this.options.backdrop == 'static'
+        this.options.backdrop == 'statics'
           ? this.$element[0].focus()
           : this.hide()
       }, this))
