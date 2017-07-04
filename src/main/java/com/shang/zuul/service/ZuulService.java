@@ -1,5 +1,7 @@
-package com.shang.zuul;
+package com.shang.zuul.service;
 
+import com.shang.zuul.ZuulFilter;
+import com.shang.zuul.ZuulProvider;
 import com.shang.zuul.domain.URLEntry;
 import com.shang.zuul.repository.URLEntryRepository;
 import lombok.extern.log4j.Log4j;
@@ -47,8 +49,10 @@ public class ZuulService implements ZuulProvider {
     @Override
     public ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute) {
         count++;
-        if (changeRoutes.keySet().contains(zuulRoute.getId())) {
-            zuulRoute.setLocation(changeRoutes.get(zuulRoute.getId()));
+        if (zuulRoute != null) {
+            if (changeRoutes.keySet().contains(zuulRoute.getId())) {
+                zuulRoute.setLocation(changeRoutes.get(zuulRoute.getId()));
+            }
         }
         return zuulRoute;
     }
@@ -69,7 +73,7 @@ public class ZuulService implements ZuulProvider {
      *
      * @param map
      */
-    public void addRoutes(Map<String, ZuulProperties.ZuulRoute> map) {
+    public void reSetRoutes(Map<String, ZuulProperties.ZuulRoute> map) {
         properties.setRoutes(map);
         zuulFilter.refresh();
         freshMapper();
@@ -82,6 +86,10 @@ public class ZuulService implements ZuulProvider {
      */
     public List<Route> getRoutes() {
         return zuulFilter.getRoutes();
+    }
+
+    public Map<String, ZuulProperties.ZuulRoute> getPropertiesRoutes() {
+        return properties.getRoutes();
     }
 
 

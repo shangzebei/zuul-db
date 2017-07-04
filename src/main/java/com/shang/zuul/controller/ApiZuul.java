@@ -1,6 +1,6 @@
 package com.shang.zuul.controller;
 
-import com.shang.zuul.ZuulService;
+import com.shang.zuul.service.ZuulService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;

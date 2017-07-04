@@ -1,5 +1,5 @@
-// var _url="http://192.168.1.161:8888/";
-var _url="";
+var _url="http://192.168.1.161:8888/";
+// var _url="";
 var http = {
     //Ajax的get请求方法
     getAjax_clean: function (url, cb) {
@@ -11,7 +11,7 @@ var http = {
                 cb(data);
             },
             error: function (data) {
-                // alert('与服务器通信发生异常');
+                console.log(data)
             }
         });
     },
@@ -29,7 +29,7 @@ var http = {
                 cb(data);
             },
             error: function (data) {
-                // alert('与服务器通信发生异常');
+                console.log(data)
             }
         });
     },
@@ -47,7 +47,7 @@ var http = {
                 cb(data);
             },
             error: function (data) {
-                // alert('与服务器通信发生异常');
+                console.log(data)
             }
         });
     },
@@ -66,7 +66,7 @@ var http = {
             },
             error: function (data) {
                 $(e.target).removeAttr('disabled');
-                // alert('与服务器通信发生异常');
+                console.log(data)
             }
         });
     },
@@ -89,6 +89,7 @@ var http = {
             },
             error: function (data) {
                 $(e.target).removeAttr('disabled');
+                console.log(data)
                 // alert('与服务器通信发生异常');
             }
         });

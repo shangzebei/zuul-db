@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface URLEntryRepository extends JpaRepository<URLEntry,Long>{
     URLEntry findByTitle(String url);
+
+    void deleteByTitle(String title);
 }
