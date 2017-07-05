@@ -15,6 +15,10 @@ public class Util {
         }
         zuulRoute.setLocation(routeEntry.getUrl());
         zuulRoute.setStripPrefix(routeEntry.isStripPrefix());
+
+        routeEntry.setPath(zuulRoute.getPath());
+        routeEntry.setServiceId(zuulRoute.getServiceId());
+
         return zuulRoute;
     }
 
