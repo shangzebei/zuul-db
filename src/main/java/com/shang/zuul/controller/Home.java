@@ -63,8 +63,8 @@ public class Home {
         return ResponseEntity.ok(route);
     }
 
-    @PostMapping("change")
-    public ResponseEntity change(String title, String local,boolean stripPrefix) {
+    @PostMapping("change")//@RequestParam(defaultValue = "true")
+    public ResponseEntity change(String title, String local, boolean stripPrefix) {
         boolean change = homeServie.change(title, local,stripPrefix);
         return ResponseEntity.ok(Collections.singletonMap("state", change));
     }

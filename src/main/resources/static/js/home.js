@@ -91,11 +91,11 @@ function change(i) {
 }
 function changSave(title) {
     var local = $("#local");
-    var strp=$("#stripPrefix").is(':checked')
+    var stripPrefix=$("#stripPrefix").is(':checked')
     var fromDate = new FormData();
-    fromDate.append("title", title)
-    fromDate.append("local", local.val())
-    fromDate.append("strp",strp)
+    fromDate.append("title", title);
+    fromDate.append("local", local.val());
+    fromDate.append("stripPrefix", stripPrefix);
     http.postAjax_clean("route/change", fromDate, function (resdate) {
         if (resdate.state == true) {
             window.location.reload();
