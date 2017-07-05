@@ -2,7 +2,7 @@ package com.shang.zuul.service;
 
 import com.shang.zuul.ZuulFilter;
 import com.shang.zuul.ZuulProvider;
-import com.shang.zuul.domain.URLEntry;
+import com.shang.zuul.domain.RouteEntry;
 import com.shang.zuul.repository.URLEntryRepository;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,10 +95,10 @@ public class ZuulService implements ZuulProvider {
     public void init(ZuulFilter zuulFilter, ZuulProperties properties) {
         this.zuulFilter = zuulFilter;
         this.properties = properties;
-        List<URLEntry> all = urlEntryRepository.findAll();
-        for (URLEntry urlEntry : all) {
+        List<RouteEntry> all = urlEntryRepository.findAll();
+        for (RouteEntry routeEntry : all) {
             ZuulProperties.ZuulRoute route = new ZuulProperties
-                    .ZuulRoute(urlEntry.getPath(), urlEntry.getLocal());
+                    .ZuulRoute(routeEntry.getPath(), routeEntry.getUrl());
             zuulFilter.addRoute(route);
         }
 

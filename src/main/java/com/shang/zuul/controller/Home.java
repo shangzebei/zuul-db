@@ -1,7 +1,7 @@
 package com.shang.zuul.controller;
 
 import com.shang.zuul.service.ZuulService;
-import com.shang.zuul.domain.URLEntry;
+import com.shang.zuul.domain.RouteEntry;
 import com.shang.zuul.service.HomeServie;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,31 +30,30 @@ public class Home {
 
     @GetMapping("getAll")
     @ResponseBody
-    private ArrayList<URLEntry> listAll() {
+    private ArrayList<RouteEntry> listAll() {
         List<Route> routes = zuulService.getRoutes();
-        ArrayList<URLEntry> urlEntries = new ArrayList<>();
+        ArrayList<RouteEntry> urlEntries = new ArrayList<>();
         for (int i = 1; i <= routes.size(); i++) {
-            URLEntry urlEntry = new URLEntry();
+            RouteEntry routeEntry = new RouteEntry();
             Route route = routes.get(i - 1);
-            urlEntry.setId(Long.valueOf(i));
-            urlEntry.setTitle(route.getId());
-            urlEntry.setPath(route.getFullPath());
-            urlEntry.setLocal(route.getLocation());
-            urlEntries.add(urlEntry);
+            routeEntry.setId(Long.valueOf(i));
+            routeEntry.setTitle(route.getId());
+            routeEntry.setPath(route.getFullPath());
+            routeEntry.setUrl(route.getLocation());
+            urlEntries.add(routeEntry);
         }
         return urlEntries;
     }
 
     @PostMapping("add")
     @ResponseBody
-    public ResponseEntity add(@Valid URLEntry urlEntry, BindingResult bindingResult) {
+    public ResponseEntity add(@Valid RouteEntry routeEntry, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.info(bindingResult.toString());
-            return ResponseEntity.badRequest()
-                    .body(Collections.singletonMap("state", false));
+            return ResponseEntity.ok(Collections.singletonMap("state", false));
         }
 
-        boolean add = homeServie.add(urlEntry);
+        boolean add = homeServie.add(routeEntry);
         return ResponseEntity.ok(Collections.singletonMap("state", add));
     }
 
@@ -65,8 +64,8 @@ public class Home {
     }
 
     @PostMapping("change")
-    public ResponseEntity change(String title, String local) {
-        boolean change = homeServie.change(title, local);
+    public ResponseEntity change(String title, String local,boolean stripPrefix) {
+        boolean change = homeServie.change(title, local,stripPrefix);
         return ResponseEntity.ok(Collections.singletonMap("state", change));
     }
 

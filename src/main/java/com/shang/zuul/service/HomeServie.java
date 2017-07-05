@@ -1,7 +1,7 @@
 package com.shang.zuul.service;
 
 import com.shang.zuul.Util;
-import com.shang.zuul.domain.URLEntry;
+import com.shang.zuul.domain.RouteEntry;
 import com.shang.zuul.repository.URLEntryRepository;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +24,21 @@ public class HomeServie {
     /**
      * add route
      *
-     * @param urlEntry
+     * @param routeEntry
      * @return
      */
-    public boolean add(URLEntry urlEntry) {
-        urlEntry = Util.check(urlEntry);
-        zuulService.addRoute(new ZuulProperties.ZuulRoute(urlEntry.getPath(), urlEntry.getLocal()));
-        URLEntry byUrl = urlEntryRepository.findByTitle(urlEntry.getTitle());
+    public boolean add(RouteEntry routeEntry) {
+        zuulService.addRoute(Util.toZuulRoute(routeEntry));
+        RouteEntry byUrl = urlEntryRepository.findByTitle(routeEntry.getTitle());
         if (byUrl == null) {
-            URLEntry save = urlEntryRepository.save(urlEntry);
+            RouteEntry save = urlEntryRepository.save(routeEntry);
             return save != null;
         }
         return false;
     }
 
-    public boolean change(String title, String local) {
-        URLEntry one = urlEntryRepository.findByTitle(title);
+    public boolean change(String title, String local, boolean stripPrefix) {
+        RouteEntry one = urlEntryRepository.findByTitle(title);
         String key = null;
         Map<String, ZuulProperties.ZuulRoute> routes = zuulService.getPropertiesRoutes();
         for (Map.Entry<String, ZuulProperties.ZuulRoute> stringZuulRouteEntry : routes.entrySet()) {
@@ -49,10 +48,12 @@ public class HomeServie {
             }
         }
         if (key == null) return false;
-        routes.get(key).setLocation(local);
+        ZuulProperties.ZuulRoute zuulRoute = routes.get(key);
+        zuulRoute.setLocation(local);
+        zuulRoute.setStripPrefix(stripPrefix);
         zuulService.reSetRoutes(routes);
         if (one != null) {
-            one.setLocal(local);
+            one.setUrl(local);
             urlEntryRepository.save(one);
             return true;
         }

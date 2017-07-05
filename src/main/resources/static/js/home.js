@@ -14,7 +14,7 @@ $(document).ready(function () {
                 field: 'path',
                 title: '匹配路由'
             }, {
-                field: 'local',
+                field: 'url',
                 title: '目标路由'
             }, {
                 field: 'ops',
@@ -44,21 +44,23 @@ function add() {
     title.attr("disabled", false);
     local.val("");
     path.attr("disabled", false);
-    savebtn.attr("onclick", "save()");
+    savebtn.attr("onclick", "saveAdd()");
     path.val("");
     diaTitle.text("添加路由");
     $(".add_dia").modal("show");
 
 }
-function save() {
+function saveAdd() {
 
     var url = $("#title").val();
     var local = $("#local").val();
     var path = $("#path").val();
+    var strp=$("#stripPrefix").is(':checked')
     var from = new FormData();
     from.append("title", url);
-    from.append("local", local)
-    from.append("path", path)
+    from.append("url", local);
+    from.append("path", path);
+    from.append("stripPrefix", strp);
     http.postAjax_clean("route/add", from, function (data) {
         if (data.state == true) {
             window.location.reload();
@@ -89,9 +91,11 @@ function change(i) {
 }
 function changSave(title) {
     var local = $("#local");
+    var strp=$("#stripPrefix").is(':checked')
     var fromDate = new FormData();
     fromDate.append("title", title)
     fromDate.append("local", local.val())
+    fromDate.append("strp",strp)
     http.postAjax_clean("route/change", fromDate, function (resdate) {
         if (resdate.state == true) {
             window.location.reload();
