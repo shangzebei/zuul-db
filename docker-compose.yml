@@ -6,6 +6,6 @@ services:
     build: .
     environment:
           - JAVA_OPTS=-Dfile.encoding=UTF-8 -Dlogging.path=/var/log/project/cmadmin -Dlogback.loglevel=DEBUG
-          - SPRING_BOOT_OPTS=--server.port=9001 --spring.datasource.url=jdbc:mysql:3306/shang --spring.datasource.username=root --spring.datasource.password=shang
+          - SPRING_BOOT_OPTS= --server.port=9001 --spring.datasource.url=jdbc:mysql://192.168.1.88:3306/shang --spring.datasource.username=root --spring.datasource.password=shang
     ports:
       - 80:9001
