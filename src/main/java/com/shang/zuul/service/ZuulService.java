@@ -3,6 +3,7 @@ package com.shang.zuul.service;
 import com.shang.zuul.Util;
 import com.shang.zuul.ZuulFilter;
 import com.shang.zuul.ZuulProvider;
+import com.shang.zuul.domain.Message;
 import com.shang.zuul.domain.RouteEntry;
 import com.shang.zuul.repository.URLEntryRepository;
 import lombok.extern.log4j.Log4j;
@@ -35,7 +36,7 @@ public class ZuulService implements ZuulProvider {
     private ZuulProperties properties;
 
     @Autowired
-    private SpeedWebsocket speedWebsocket;
+    private MessageWebsocket messageWebsocket;
 
 
     volatile long count = 0;
@@ -109,13 +110,9 @@ public class ZuulService implements ZuulProvider {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                if (speedWebsocket.get_session() != null) {
-                    try {
-                        speedWebsocket.get_session().sendMessage(new TextMessage(count + ""));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+
+                messageWebsocket.sendMessage(new Message(0,count + ""));
+
                 count = 0;
             }
         }, 0, 1000);

@@ -151,7 +151,14 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    $(".speed").text(evt.data + " t/s");
+    var result=JSON.parse(evt.data)
+    if (result.type==0) {
+        $(".speed").text(result.message + " t/s");
+    }
+    if (result.type==1) {
+        console.log(result.message);
+    }
+
 }
 
 function onError(evt) {
