@@ -26,7 +26,7 @@ public class LogService extends ZuulFilter {
 
     @Override
     public int filterOrder() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -37,9 +37,9 @@ public class LogService extends ZuulFilter {
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
+        final HttpServletRequest request = ctx.getRequest();
         log.debug(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-        messageWebsocket.sendMessage(new Message(1,String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString())));
+         messageWebsocket.sendMessage(new Message(1,String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString())));
         return null;
     }
 }

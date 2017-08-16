@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @Log4j
 public class MessageWebsocket extends TextWebSocketHandler {
-    private List<WebSocketSession> _session=new ArrayList<>();
+    private List<WebSocketSession> _session = new ArrayList<>();
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
@@ -38,13 +38,18 @@ public class MessageWebsocket extends TextWebSocketHandler {
     }
 
     public void sendMessage(Message message) {
-          _session.forEach(webSocketSession -> {
-              try {
-                  webSocketSession.sendMessage(new TextMessage(new Gson().toJson(message)));
-              } catch (IOException e) {
-                  e.printStackTrace();
-              }
-          });
+        try {
+            log.info(_session);
+            _session.forEach(webSocketSession -> {
+                try {
+                    webSocketSession.sendMessage(new TextMessage(new Gson().toJson(message).getBytes()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
