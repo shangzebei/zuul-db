@@ -125,6 +125,7 @@ function changDialog(data) {
 
 var websocket = null;
 var localurl = document.location.href.split("/")[2] + "/routes/speed";
+// var localurl = "192.168.0.163:8888" + "/routes/speed";
 function initWebSocket() {
 
     if ('WebSocket' in window) {
@@ -156,7 +157,8 @@ function onMessage(evt) {
         $(".speed").text(result.message + " t/s");
     }
     if (result.type==1) {
-        console.log(result.message);
+        // console.log(result.message);
+        $('#setUrl').text(result.message);
     }
 
 }
