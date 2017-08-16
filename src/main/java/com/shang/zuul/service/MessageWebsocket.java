@@ -39,7 +39,7 @@ public class MessageWebsocket extends TextWebSocketHandler {
 
     public void sendMessage(Message message) {
         try {
-            log.info(_session);
+//            log.info(_session);
             _session.forEach(webSocketSession -> {
                 try {
                     webSocketSession.sendMessage(new TextMessage(new Gson().toJson(message).getBytes()));
