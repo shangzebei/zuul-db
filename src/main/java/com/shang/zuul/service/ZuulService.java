@@ -1,5 +1,6 @@
 package com.shang.zuul.service;
 
+import com.shang.zuul.Util;
 import com.shang.zuul.ZuulFilter;
 import com.shang.zuul.ZuulProvider;
 import com.shang.zuul.domain.RouteEntry;
@@ -97,8 +98,7 @@ public class ZuulService implements ZuulProvider {
         this.properties = properties;
         List<RouteEntry> all = urlEntryRepository.findAll();
         for (RouteEntry routeEntry : all) {
-            ZuulProperties.ZuulRoute route = new ZuulProperties
-                    .ZuulRoute(routeEntry.getPath(), routeEntry.getUrl());
+            ZuulProperties.ZuulRoute route = Util.toZuulRoute(routeEntry);
             zuulFilter.addRoute(route);
         }
 
@@ -111,7 +111,7 @@ public class ZuulService implements ZuulProvider {
             public void run() {
                 if (speedWebsocket.get_session() != null) {
                     try {
-                        speedWebsocket.get_session().sendMessage(new TextMessage(count+""));
+                        speedWebsocket.get_session().sendMessage(new TextMessage(count + ""));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

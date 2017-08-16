@@ -47,6 +47,7 @@ function add() {
     savebtn.attr("onclick", "saveAdd()");
     path.val("");
     diaTitle.text("添加路由");
+    document.getElementById("stripPrefix").checked = true;
     $(".add_dia").modal("show");
 
 }
@@ -55,7 +56,7 @@ function saveAdd() {
     var url = $("#title").val();
     var local = $("#local").val();
     var path = $("#path").val();
-    var strp=$("#stripPrefix").is(':checked')
+    var strp = $("#stripPrefix").is(':checked')
     var from = new FormData();
     from.append("title", url);
     from.append("url", local);
@@ -91,7 +92,7 @@ function change(i) {
 }
 function changSave(title) {
     var local = $("#local");
-    var stripPrefix=$("#stripPrefix").is(':checked')
+    var stripPrefix = $("#stripPrefix").is(':checked')
     var fromDate = new FormData();
     fromDate.append("title", title);
     fromDate.append("local", local.val());
@@ -109,6 +110,7 @@ function changDialog(data) {
     var path = $("#path");
     var savebtn = $(".zuul-chang");
     var diaTitle = $("#myModalLabel");
+    // var stripPrefix = $("#stripPrefix");
     title.val(data.id);
     title.attr("disabled", true);
     local.val(data.location);
@@ -116,6 +118,7 @@ function changDialog(data) {
     savebtn.attr("onclick", "changSave('" + data.id + "')");
     path.val(data.fullPath);
     diaTitle.text("改变路由");
+    document.getElementById("stripPrefix").checked = data.prefix.length > 0;
     $(".add_dia").modal("show");
 }
 
@@ -148,7 +151,7 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    $(".speed").text(evt.data+" t/s");
+    $(".speed").text(evt.data + " t/s");
 }
 
 function onError(evt) {
