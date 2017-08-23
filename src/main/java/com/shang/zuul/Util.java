@@ -9,8 +9,9 @@ import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 public class Util {
     public static ZuulProperties.ZuulRoute toZuulRoute(RouteEntry routeEntry) {
         ZuulProperties.ZuulRoute zuulRoute = new ZuulProperties.ZuulRoute(
-                routeEntry.getPath(),routeEntry.getUrl()
+                routeEntry.getPath(), routeEntry.getUrl()
         );
+        zuulRoute.setCustomSensitiveHeaders(true);
         zuulRoute.setStripPrefix(routeEntry.isStripPrefix());
         return zuulRoute;
     }
