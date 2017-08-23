@@ -43,16 +43,16 @@ public class LogService extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         final HttpServletRequest request = ctx.getRequest();
         log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-//        InputStream responseDataStream = ctx.getResponseDataStream();
-//        try {
-//            byte[] b=new byte[responseDataStream.available()];
-//            responseDataStream.read(b);
-//            String message = new String(b, "UTF-8");
-//            log.info(message);
-//            ctx.setResponseBody(message);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        InputStream responseDataStream = ctx.getResponseDataStream();
+        try {
+            byte[] b=new byte[responseDataStream.available()];
+            responseDataStream.read(b);
+            String message = new String(b, "UTF-8");
+            log.info(message);
+            ctx.setResponseBody(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         messageWebsocket.sendMessage(new Message(1,String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString())));
 
         return null;
