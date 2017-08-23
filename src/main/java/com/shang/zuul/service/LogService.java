@@ -44,7 +44,8 @@ public class LogService extends ZuulFilter {
         log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
         messageWebsocket.sendMessage(new Message(1,String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString())));
 
-
+        String responseBody = ctx.getResponseBody();
+        log.info(responseBody);
         return null;
     }
 }
