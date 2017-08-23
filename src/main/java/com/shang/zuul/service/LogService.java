@@ -9,6 +9,7 @@ import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.SEND_RESPONSE_FILTER_ORDER;
 
@@ -29,7 +30,7 @@ public class LogService extends ZuulFilter {
 
     @Override
     public int filterOrder() {
-        return SEND_RESPONSE_FILTER_ORDER+1;
+        return SEND_RESPONSE_FILTER_ORDER-1;
     }
 
     @Override
@@ -42,10 +43,18 @@ public class LogService extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         final HttpServletRequest request = ctx.getRequest();
         log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
+//        InputStream responseDataStream = ctx.getResponseDataStream();
+//        try {
+//            byte[] b=new byte[responseDataStream.available()];
+//            responseDataStream.read(b);
+//            String message = new String(b, "UTF-8");
+//            log.info(message);
+//            ctx.setResponseBody(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         messageWebsocket.sendMessage(new Message(1,String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString())));
 
-        String responseBody = ctx.getResponseBody();
-        log.info(responseBody);
         return null;
     }
 }

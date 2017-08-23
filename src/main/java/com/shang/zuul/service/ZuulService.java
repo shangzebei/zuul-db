@@ -1,7 +1,7 @@
 package com.shang.zuul.service;
 
+import com.shang.zuul.DefZuulFilter;
 import com.shang.zuul.Util;
-import com.shang.zuul.ZuulFilter;
 import com.shang.zuul.ZuulProvider;
 import com.shang.zuul.domain.Message;
 import com.shang.zuul.domain.RouteEntry;
@@ -13,9 +13,7 @@ import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -26,7 +24,7 @@ import java.util.*;
 public class ZuulService implements ZuulProvider {
 
 
-    public ZuulFilter zuulFilter;
+    public DefZuulFilter defZuulFilter;
 
     @Autowired
     private ApplicationEventPublisher publisher;
@@ -53,7 +51,7 @@ public class ZuulService implements ZuulProvider {
      * @param zuulRoute
      */
     public void addRoute(ZuulProperties.ZuulRoute zuulRoute) {
-        zuulFilter.addRoute(zuulRoute);
+        defZuulFilter.addRoute(zuulRoute);
         freshMapperUrl();
 
     }
@@ -65,7 +63,7 @@ public class ZuulService implements ZuulProvider {
      */
     public void reSetRoutes(Map<String, ZuulProperties.ZuulRoute> map) {
         properties.setRoutes(map);
-        zuulFilter.refresh();
+        defZuulFilter.refresh();
         freshMapperUrl();
     }
 
@@ -75,7 +73,7 @@ public class ZuulService implements ZuulProvider {
      * @return
      */
     public List<Route> getRoutes() {
-        return zuulFilter.getRoutes();
+        return defZuulFilter.getRoutes();
     }
 
     public Map<String, ZuulProperties.ZuulRoute> getPropertiesRoutes() {
@@ -84,23 +82,23 @@ public class ZuulService implements ZuulProvider {
 
 
     private void freshMapperUrl() {
-        publisher.publishEvent(new RoutesRefreshedEvent(zuulFilter));
+        publisher.publishEvent(new RoutesRefreshedEvent(defZuulFilter));
     }
 
     /**
      * init method
      *
-     * @param zuulFilter
+     * @param defZuulFilter
      * @param properties
      */
     @Override
-    public void init(ZuulFilter zuulFilter, ZuulProperties properties) {
-        this.zuulFilter = zuulFilter;
+    public void init(DefZuulFilter defZuulFilter, ZuulProperties properties) {
+        this.defZuulFilter = defZuulFilter;
         this.properties = properties;
         List<RouteEntry> all = urlEntryRepository.findAll();
         for (RouteEntry routeEntry : all) {
             ZuulProperties.ZuulRoute route = Util.toZuulRoute(routeEntry);
-            zuulFilter.addRoute(route);
+            defZuulFilter.addRoute(route);
         }
 
         showSpeed();

@@ -1,6 +1,6 @@
 package com.shang.zuul.config;
 
-import com.shang.zuul.ZuulFilter;
+import com.shang.zuul.DefZuulFilter;
 import com.shang.zuul.ZuulProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -35,7 +35,7 @@ public class AppConfig{
 
     @Bean(value = "discoveryRouteLocator")
     public DiscoveryClientRouteLocator discoveryClientRouteLocator(ServerProperties server, DiscoveryClient discovery, ZuulProperties properties) {
-        return new ZuulFilter(server.getServletPath(), discovery, properties, zuulProvider);
+        return new DefZuulFilter(server.getServletPath(), discovery, properties, zuulProvider);
     }
 
 

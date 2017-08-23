@@ -14,9 +14,9 @@ public interface ZuulProvider {
     ZuulProperties.ZuulRoute getRoute(ZuulProperties.ZuulRoute zuulRoute);
 
     /**
-     * init with zuulFilter
-     * @param zuulFilter
+     * init with defZuulFilter
+     * @param defZuulFilter
      * @param properties
      */
-    void init(ZuulFilter zuulFilter, ZuulProperties properties);
+    void init(DefZuulFilter defZuulFilter, ZuulProperties properties);
 }

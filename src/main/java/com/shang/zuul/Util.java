@@ -12,6 +12,8 @@ public class Util {
         zuulRoute.setId(routeEntry.getTitle());
         if (routeEntry.getPath() == null || routeEntry.getPath().equals("")) {
             zuulRoute.setPath("/" + routeEntry.getTitle() + "/**");
+        } else {
+            zuulRoute.setPath(routeEntry.getPath());
         }
         zuulRoute.setLocation(routeEntry.getUrl());
         zuulRoute.setStripPrefix(routeEntry.isStripPrefix());
